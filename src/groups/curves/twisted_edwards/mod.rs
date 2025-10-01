@@ -548,7 +548,7 @@ where
         Ok(())
     }
 
-    fn xy(&self) -> Result<(F, F), SynthesisError> {
+    fn affine_xy(&self) -> Result<(F, F), SynthesisError> {
         Ok((self.x.clone(), self.y.clone()))
     }
 }

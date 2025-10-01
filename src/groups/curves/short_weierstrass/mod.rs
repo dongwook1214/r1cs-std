@@ -574,7 +574,7 @@ where
         Ok(())
     }
 
-    fn xy(&self) -> Result<(F, F), SynthesisError> {
+    fn affine_xy(&self) -> Result<(F, F), SynthesisError> {
         let self_affine = self.to_affine()?;
         Ok((self_affine.x, self_affine.y))
     }
