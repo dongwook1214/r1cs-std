@@ -395,7 +395,7 @@ where
     }
 }
 
-impl<P, F> CurveVar<TEProjective<P>, BasePrimeField<P>> for AffineVar<P, F>
+impl<P, F> CurveVar<TEProjective<P>, BasePrimeField<P>, F> for AffineVar<P, F>
 where
     P: TECurveConfig,
     F: FieldVar<P::BaseField, BasePrimeField<P>>
@@ -546,6 +546,10 @@ where
         }
 
         Ok(())
+    }
+
+    fn xy(&self) -> Result<(F, F), SynthesisError> {
+        Ok((self.x.clone(), self.y.clone()))
     }
 }
 

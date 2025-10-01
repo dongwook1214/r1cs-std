@@ -371,7 +371,7 @@ where
     }
 }
 
-impl<P, F> CurveVar<SWProjective<P>, BasePrimeField<P>> for ProjectiveVar<P, F>
+impl<P, F> CurveVar<SWProjective<P>, BasePrimeField<P>, F> for ProjectiveVar<P, F>
 where
     P: SWCurveConfig,
     F: FieldVar<P::BaseField, BasePrimeField<P>>,
@@ -572,6 +572,11 @@ where
         let base = bases[0];
         *self += Self::constant(base).scalar_mul_le(bits.iter())?;
         Ok(())
+    }
+
+    fn xy(&self) -> Result<(F, F), SynthesisError> {
+        let self_affine = self.to_affine()?;
+        Ok((self_affine.x, self_affine.y))
     }
 }
 

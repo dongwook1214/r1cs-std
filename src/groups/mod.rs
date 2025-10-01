@@ -29,7 +29,7 @@ pub trait GroupOpsBounds<'a, G, T: 'a>:
 
 /// A variable that represents a curve point for
 /// the curve `C`.
-pub trait CurveVar<C: CurveGroup, ConstraintF: PrimeField>:
+pub trait CurveVar<C: CurveGroup, ConstraintF: PrimeField, F: FieldVar<C::BaseField, ConstraintF>>:
     'static
     + Sized
     + Clone
@@ -67,6 +67,19 @@ pub trait CurveVar<C: CurveGroup, ConstraintF: PrimeField>:
     ///
     /// This *should not* allocate any variables.
     fn constant(other: C) -> Self;
+
+    /// Returns the x and y coordinates of this affine point.
+    fn xy(&self) -> Result<(F, F), SynthesisError>;
+
+    /// Returns the x coordinate of this affine point.
+    fn x(&self) -> Result<F, SynthesisError> {
+        self.xy().map(|(x, _)| x)
+    }
+
+    /// Returns the y coordinate of this affine point.
+    fn y(&self) -> Result<F, SynthesisError> {
+        self.xy().map(|(_, y)| y)
+    }
 
     /// Allocates a variable in the subgroup without checking if it's in the
     /// prime-order subgroup.
