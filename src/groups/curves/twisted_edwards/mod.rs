@@ -395,13 +395,15 @@ where
     }
 }
 
-impl<P, F> CurveVar<TEProjective<P>, BasePrimeField<P>, F> for AffineVar<P, F>
+impl<P, F> CurveVar<TEProjective<P>, BasePrimeField<P>> for AffineVar<P, F>
 where
     P: TECurveConfig,
     F: FieldVar<P::BaseField, BasePrimeField<P>>
         + TwoBitLookupGadget<BasePrimeField<P>, TableConstant = P::BaseField>,
     for<'a> &'a F: FieldOpsBounds<'a, P::BaseField, F>,
 {
+    type F = F;
+
     fn constant(g: TEProjective<P>) -> Self {
         let cs = ConstraintSystemRef::None;
         Self::new_variable_omit_on_curve_check(cs, || Ok(g), AllocationMode::Constant).unwrap()

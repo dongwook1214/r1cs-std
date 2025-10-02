@@ -14,19 +14,14 @@ type BasePrimeField<E> = <<E as Pairing>::BaseField as ark_ff::Field>::BasePrime
 
 /// Specifies the constraints for computing a pairing in the yybilinear group
 /// `E`.
-pub trait PairingVar<
-    E: Pairing,
-    F1: FieldVar<<E::G1 as ark_ec::CurveGroup>::BaseField, E::BaseField>,
-    F2: FieldVar<<E::G2 as ark_ec::CurveGroup>::BaseField, E::BaseField>,
->
-{
+pub trait PairingVar<E: Pairing> {
     /// An variable representing an element of `G1`.
     /// This is the R1CS equivalent of `E::G1Projective`.
-    type G1Var: CurveVar<E::G1, BasePrimeField<E>, F1>;
+    type G1Var: CurveVar<E::G1, BasePrimeField<E>>;
 
     /// An variable representing an element of `G2`.
     /// This is the R1CS equivalent of `E::G2Projective`.
-    type G2Var: CurveVar<E::G2, BasePrimeField<E>, F2>;
+    type G2Var: CurveVar<E::G2, BasePrimeField<E>>;
 
     /// An variable representing an element of `GT`.
     /// This is the R1CS equivalent of `E::GT`.

@@ -29,7 +29,7 @@ pub trait GroupOpsBounds<'a, G, T: 'a>:
 
 /// A variable that represents a curve point for
 /// the curve `C`.
-pub trait CurveVar<C: CurveGroup, ConstraintF: PrimeField, F: FieldVar<C::BaseField, ConstraintF>>:
+pub trait CurveVar<C: CurveGroup, ConstraintF: PrimeField>:
     'static
     + Sized
     + Clone
@@ -53,6 +53,8 @@ pub trait CurveVar<C: CurveGroup, ConstraintF: PrimeField, F: FieldVar<C::BaseFi
     + for<'a> Mul<&'a EmulatedFpVar<C::ScalarField, ConstraintF>, Output = Self>
     + MulAssign<EmulatedFpVar<C::ScalarField, ConstraintF>>
 {
+    type F: FieldVar<C::BaseField, ConstraintF>;
+
     /// Returns the constant `F::zero()`. This is the identity
     /// of the group.
     fn zero() -> Self;
@@ -69,15 +71,15 @@ pub trait CurveVar<C: CurveGroup, ConstraintF: PrimeField, F: FieldVar<C::BaseFi
     fn constant(other: C) -> Self;
 
     /// Returns the x and y coordinates in Affine representation.
-    fn affine_xy(&self) -> Result<(F, F), SynthesisError>;
+    fn affine_xy(&self) -> Result<(Self::F, Self::F), SynthesisError>;
 
     /// Returns the x coordinate in Affine representation.
-    fn affine_x(&self) -> Result<F, SynthesisError> {
+    fn affine_x(&self) -> Result<Self::F, SynthesisError> {
         self.affine_xy().map(|(x, _)| x)
     }
 
     /// Returns the y coordinate in Affine representation.
-    fn affine_y(&self) -> Result<F, SynthesisError> {
+    fn affine_y(&self) -> Result<Self::F, SynthesisError> {
         self.affine_xy().map(|(_, y)| y)
     }
 

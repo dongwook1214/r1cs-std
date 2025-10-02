@@ -371,12 +371,14 @@ where
     }
 }
 
-impl<P, F> CurveVar<SWProjective<P>, BasePrimeField<P>, F> for ProjectiveVar<P, F>
+impl<P, F> CurveVar<SWProjective<P>, BasePrimeField<P>> for ProjectiveVar<P, F>
 where
     P: SWCurveConfig,
     F: FieldVar<P::BaseField, BasePrimeField<P>>,
     for<'a> &'a F: FieldOpsBounds<'a, P::BaseField, F>,
 {
+    type F = F;
+
     fn constant(g: SWProjective<P>) -> Self {
         let cs = ConstraintSystemRef::None;
         Self::new_variable_omit_on_curve_check(cs, || Ok(g), AllocationMode::Constant).unwrap()

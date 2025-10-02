@@ -196,9 +196,7 @@ impl<P: MNT4Config> PairingVar<P> {
     }
 }
 
-impl<P: MNT4Config> PG<MNT4<P>, FpVar<<P as MNT4Config>::Fp>, Fp2Var<<P as MNT4Config>::Fp2Config>>
-    for PairingVar<P>
-{
+impl<P: MNT4Config> PG<MNT4<P>> for PairingVar<P> {
     type G1Var = G1Var<P>;
     type G2Var = G2Var<P>;
     type G1PreparedVar = G1PreparedVar<P>;
