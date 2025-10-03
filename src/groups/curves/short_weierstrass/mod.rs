@@ -377,7 +377,7 @@ where
     F: FieldVar<P::BaseField, BasePrimeField<P>>,
     for<'a> &'a F: FieldOpsBounds<'a, P::BaseField, F>,
 {
-    type F = F;
+    type BaseFieldVar = F;
 
     fn constant(g: SWProjective<P>) -> Self {
         let cs = ConstraintSystemRef::None;

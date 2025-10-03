@@ -402,7 +402,7 @@ where
         + TwoBitLookupGadget<BasePrimeField<P>, TableConstant = P::BaseField>,
     for<'a> &'a F: FieldOpsBounds<'a, P::BaseField, F>,
 {
-    type F = F;
+    type BaseFieldVar = F;
 
     fn constant(g: TEProjective<P>) -> Self {
         let cs = ConstraintSystemRef::None;
